@@ -57,6 +57,10 @@ forward_finish:
     addi $t1, $t1, 1
     j forward_loop
 
+backward_setup:
+    li $t1, 1
+    j backward_loop
+
 ########################
 # EXIT
 ########################
