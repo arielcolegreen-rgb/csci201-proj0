@@ -61,6 +61,8 @@ backward_setup:
     li $t1, 1
     j backward_loop
 
+backward_loop:
+    j exit_program
 ########################
 # EXIT
 ########################
