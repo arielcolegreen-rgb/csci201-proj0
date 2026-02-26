@@ -60,9 +60,51 @@ forward_finish:
 backward_setup:
     li $t1, 1
     j backward_loop
-
 backward_loop:
-    j exit_program
+    bgt $t1, $t0, exit_program
+
+    # (m - 1) % 9
+    addi $t2, $t1, -1
+    li $t3, 9
+    div $t2, $t3
+    mfhi $t4
+
+    la $t5, id
+    add $t6, $t5, $t4
+
+# print from start index down to beginning
+backward_part1:
+    lb $a0, 0($t6)
+    li $v0, 11
+    syscall
+
+    beq $t6, $t5, backward_part2
+    addi $t6, $t6, -1
+    j backward_part1
+
+# print from end down to start+1
+backward_part2:
+    la $t6, id
+    addi $t6, $t6, 8   # last index (string length 9)
+
+backward_part3:
+    add $t7, $t5, $t4
+    beq $t6, $t7, backward_finish
+
+    lb $a0, 0($t6)
+    li $v0, 11
+    syscall
+
+    addi $t6, $t6, -1
+    j backward_part3
+
+backward_finish:
+    li $v0, 11
+    li $a0, 10
+    syscall
+
+    addi $t1, $t1, 1
+    j backward_loop
 ########################
 # EXIT
 ########################
