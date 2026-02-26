@@ -14,7 +14,7 @@ main:
 ########################
 
 forward_loop:
-    bgt $t1, $t0, exit_program
+    bgt $t1, $t0, backward_setup
 
     # (m - 1) % 9
     addi $t2, $t1, -1
